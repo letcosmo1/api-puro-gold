@@ -5,11 +5,13 @@ import {
   HttpRequest,
   HttpResponse,
   notFound,
+  ok,
   serverError,
   unauthorized,
 } from "@shared/http";
 import { ConflictError, CreateEntityError, InvalidInputError, NotFoundError, UnauthorizedError } from "@app/errors";
 import { AuthLoginUseCase, AuthRegisterUseCase } from "../use-cases";
+import { LoginError } from "@app/errors/login-error";
 
 export type UseCases = {
   login: AuthLoginUseCase,
@@ -34,11 +36,11 @@ export default class CustomerHttpController {
       if (result instanceof UnauthorizedError) {
         return unauthorized(result);
       }
-      if (result instanceof UnauthorizedError) {
+      if (result instanceof LoginError) {
         return serverError(result);
       }
 
-      return created(result);
+      return ok(result);
     } catch (error) {
       return serverError(error);
     }
