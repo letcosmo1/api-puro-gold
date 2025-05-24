@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { NewCustomerData, Customer, UpdateCustomerData } from "../types";
 import { ICustomerRepository } from "./repository-interface";
 import { CustomerModel } from "@model/customer";
@@ -41,6 +42,8 @@ export class CustomerRepository implements ICustomerRepository {
   }
 
   async get(id: string): Promise<Customer | null> {
+    if (!mongoose.Types.ObjectId.isValid(id)) return null;
+
     const customerDocument = await CustomerModel.findById(id);
 
     if(!customerDocument) return null;
