@@ -1,15 +1,16 @@
 import { CreateEntityError, InvalidInputError } from "@app/errors";
 import { CustomerRepository } from "../repository";
-import { Customer, NewCustomerData } from "../types";
+import { CustomerCreateResponse, NewCustomerData } from "../types";
 
 export class CustomerCreateUseCase {
   constructor(private repository: CustomerRepository) {}
 
-  async action(data: NewCustomerData): Promise<Customer | CreateEntityError | InvalidInputError> {
+  async action(data: NewCustomerData): Promise<CustomerCreateResponse | CreateEntityError | InvalidInputError> {
     if(!data.name?.trim()) return new InvalidInputError("Nome inválido.");
 
     try {
-      return this.repository.save(data);
+      const customer = await this.repository.save(data);
+      return { success: true, customer };
     } catch (error) {
       return new CreateEntityError("Erro ao criar o cliente.");
     }

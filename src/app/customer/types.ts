@@ -10,3 +10,23 @@ export type NewCustomerData = {
 export type UpdateCustomerData = {
   name: string
 }
+
+export type CustomerResponse = {
+  success: boolean,
+  customer: Customer
+}
+
+export type CustomerCreateResponse = {
+  success: boolean,
+  customer: Customer
+}
+
+export type CustomerUpdateResponse = {
+  success: boolean,
+  customer: Customer
+}
+
+export type CustomerListResponse = {
+  success: boolean,
+  customers: Customer[]
+}
