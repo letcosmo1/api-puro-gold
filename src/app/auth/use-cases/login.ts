@@ -22,7 +22,7 @@ export class AuthLoginUseCase {
       if(!user) return new NotFoundError("Usuário não encontrado.");
 
       const match = await this.bcryptService.compare(data.password, user.password);
-      if (!match) throw new UnauthorizedError("Crendenciais inválidas.")
+      if (!match) return new UnauthorizedError("Crendenciais inválidas.")
 
       const token = this.jwtService.generateToken(user);
       
