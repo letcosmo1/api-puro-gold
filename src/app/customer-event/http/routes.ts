@@ -3,14 +3,16 @@ import { CustomerEventRepository } from "../repository";
 import ClientHttpController from "./controller";
 import { CustomerEventCreateUseCase, CustomerEventListUseCase, CustomerEventUpdateUseCase } from "../use-cases";
 import { authMiddleware } from "@infra/middlewares/auth";
+import { CustomerRepository } from "@app/customer/repository";
 
 export function createCustomerEventsRoutes(router: Router) {
   const customerEventRepository = new CustomerEventRepository();
+  const customerRepository = new CustomerRepository();
 
   const controller = new ClientHttpController({
     create: new CustomerEventCreateUseCase(customerEventRepository),
     update: new CustomerEventUpdateUseCase(customerEventRepository),
-    list: new CustomerEventListUseCase(customerEventRepository),
+    list: new CustomerEventListUseCase(customerEventRepository, customerRepository),
   });
 
   router.post("/customer-events", authMiddleware, async (req: Request, res: Response) => {

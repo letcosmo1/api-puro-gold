@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { NewCustomerEventData, CustomerEvent, UpdateCustomerEventData } from "../types";
 import { ICustomerEventRepository } from "./repository-interface";
 import { CustomerEventModel } from "@model/customer-event";
@@ -56,6 +57,8 @@ export class CustomerEventRepository implements ICustomerEventRepository {
   }
 
   async get(id: string): Promise<CustomerEvent | null> {
+    if (!mongoose.Types.ObjectId.isValid(id)) return null;
+
     const customerEventDocument = await CustomerEventModel.findById(id);
 
     if(!customerEventDocument) return null;
