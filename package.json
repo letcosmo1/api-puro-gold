@@ -6,7 +6,7 @@
   "scripts": {
     "start": "NODE_ENV=production node -r dotenv/config dist/src/main.js",
     "dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register -r dotenv/config src/main.ts",
-    "build": "rimraf dist && tsc --project tsconfig.build.json && resolve-tspaths"
+    "build": "npm install && rm -rf dist && tsc --project tsconfig.build.json && resolve-tspaths"
   },
   "keywords": [
     "express",
