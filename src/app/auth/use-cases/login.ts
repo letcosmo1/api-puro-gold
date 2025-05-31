@@ -26,7 +26,7 @@ export class AuthLoginUseCase {
 
       const token = this.jwtService.generateToken(user);
       
-      return { token, user: { id: user.id, email: user.email } };
+      return { success: true, token, user: { id: user.id, email: user.email } };
     } catch (error) {
       return new LoginError("Erro no login.");
     }
